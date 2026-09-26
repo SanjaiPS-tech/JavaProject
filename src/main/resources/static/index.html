@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subsea Cable Repair & Drone Trenching Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #070d19;
+            --bg-card: rgba(14, 25, 45, 0.78);
+            --border-glow: rgba(0, 212, 255, 0.25);
+            --cyan: #00f2fe;
+            --ocean-blue: #4facfe;
+            --neon-green: #00f5a0;
+            --amber: #f7b731;
+            --danger: #eb4d4b;
+            --text-primary: #e0f2fe;
+            --text-secondary: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: radial-gradient(circle at 50% 0%, #0c1a30 0%, var(--bg-deep) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glow);
+            padding: 20px 28px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        .header-title h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--cyan), var(--ocean-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .header-title p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .actor-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 8px 16px;
+            border-radius: 30px;
+        }
+        select, input, button {
+            font-family: inherit;
+            border-radius: 8px;
+        }
+        select, input {
+            background: #0b1528;
+            border: 1px solid #1e3a5f;
+            color: #fff;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+        }
+        select:focus, input:focus { border-color: var(--cyan); }
+        button {
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+            padding: 10px 18px;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan), var(--ocean-blue));
+            color: #070d19;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-danger {
+            background: rgba(235, 77, 75, 0.2);
+            color: var(--danger);
+            border: 1px solid rgba(235, 77, 75, 0.4);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        .btn-danger:hover { background: var(--danger); color: #fff; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .card-header h2 {
+            font-size: 1.15rem;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+        .form-group { margin-bottom: 12px; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        th { color: var(--text-secondary); font-weight: 600; }
+        .tag {
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .tag-customer { background: rgba(0, 245, 160, 0.15); color: var(--neon-green); }
+        .tag-vendor { background: rgba(247, 183, 49, 0.15); color: var(--amber); }
+        .tag-completed { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .stat-box {
+            background: rgba(11, 21, 40, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-box span { font-size: 0.75rem; color: var(--text-secondary); }
+        .stat-box strong { display: block; font-size: 1.15rem; color: #fff; margin-top: 4px; }
+        .flow-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #091322;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 14px;
+            border: 1px dashed rgba(0, 242, 254, 0.2);
+        }
+        .flow-step { color: var(--cyan); font-weight: 600; }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0e2442;
+            border: 1px solid var(--cyan);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-title">
+            <h1>Automated Subsea Fiber Optic Cable Repair & Drone Trenching Network</h1>
+            <p>AUV Fault Detection &bull; Automated Trenching &bull; Telecom Consortium Billing &bull; Transatlantic Segment 4</p>
+        </div>
+        <div class="actor-badge">
+            <span style="font-size:0.85rem; color:var(--text-secondary);">Active Actor:</span>
+            <select id="actorSelect" style="width:auto; padding:6px 12px; font-weight:600; background:#071224;">
+                <option value="Admin">Admin (Full Control)</option>
+                <option value="Invoicing User">Invoicing User (Billing)</option>
+                <option value="System">System (Autonomous)</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- OTDR Fault Ingest & Drone Dispatch -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📡 OTDR Fault Ingest & AUV Dispatch</h2>
+                <span class="tag tag-completed">Marine Operations</span>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;">
+                Ingest optical time-domain reflectometer fault points and dispatch autonomous trenching drones.
+            </p>
+            <div class="form-row">
+                <div class="form-group" style="flex:1;">
+                    <label>Subsea Cable ID</label>
+                    <input type="text" id="cableId" value="TAT-14-NORTH">
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label>Fault Location (km)</label>
+                    <input type="number" id="faultKm" value="284.5" step="0.1">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex:1;">
+                    <label>Assigned AUV Drone</label>
+                    <select id="auvName">
+                        <option value="AUV-TRENCHER-01">AUV-TRENCHER-01 (Heavy Blade)</option>
+                        <option value="AUV-ORCA-SPLICER">AUV-ORCA-SPLICER (Precision Arm)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label>Track Dive Hours</label>
+                    <input type="number" id="diveHours" value="14.0" step="0.5">
+                </div>
+            </div>
+            <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="dispatchAUV()">Dispatch Drone & Log Dive</button>
+            <table style="margin-top:16px;">
+                <thead><tr><th>Cable</th><th>Fault (km)</th><th>AUV</th><th>Hours</th><th>Action</th></tr></thead>
+                <tbody id="operationsList"></tbody>
+            </table>
+        </div>
+
+        <!-- Sales Flow -->
+        <div class="card">
+            <div class="card-header">
+                <h2>💼 Sales Flow (Billing Consortium)</h2>
+                <span class="tag tag-customer">Customer Workflow</span>
+            </div>
+            <div class="flow-stepper">
+                <span class="flow-step">1. Sales Order</span> &rarr;
+                <span class="flow-step">2. Customer Invoice</span> &rarr;
+                <span class="flow-step">3. Bank Payment</span>
+            </div>
+            <div class="form-group">
+                <label>Customer (Contact Master)</label>
+                <select id="salesCustomer"></select>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex:1;">
+                    <label>Service Product</label>
+                    <select id="salesProduct" onchange="updateSalesPrice()"></select>
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label>Billing Amount ($)</label>
+                    <input type="number" id="salesAmount" value="25000">
+                </div>
+            </div>
+            <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="runSalesFlow()">Execute Settle Flow & Post Journals</button>
+            <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:12px; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
+                &bull; Auto-posts balanced Debit <em>Accounts Receivable</em> / Credit <em>Cable Repair Service Revenue</em>.<br>
+                &bull; Auto-posts balanced Debit <em>Bank Account</em> / Credit <em>Accounts Receivable</em>.<br>
+                &bull; Credits Transatlantic Segment 4 revenue budget.
+            </div>
+        </div>
+
+        <!-- Purchase Flow -->
+        <div class="card">
+            <div class="card-header">
+                <h2>🛒 Purchase Flow (Marine Ops Expense)</h2>
+                <span class="tag tag-vendor">Vendor Workflow</span>
+            </div>
+            <div class="flow-stepper">
+                <span class="flow-step">1. Purchase Order</span> &rarr;
+                <span class="flow-step">2. Vendor Bill</span> &rarr;
+                <span class="flow-step">3. Bank Payment</span>
+            </div>
+            <div class="form-group">
+                <label>Vendor (Contact Master)</label>
+                <select id="purchaseVendor"></select>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex:1;">
+                    <label>Expense Category / Part</label>
+                    <select id="purchaseItem">
+                        <option value="AUV Thruster Replacement Blade">AUV Thruster Replacement (AUV Repairs)</option>
+                        <option value="Support Vessel Marine Fuel">Support Vessel Marine Fuel (Vessel Fuel)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label>Bill Amount ($)</label>
+                    <input type="number" id="purchaseAmount" value="12500">
+                </div>
+            </div>
+            <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="runPurchaseFlow()">Process Vendor Bill & Settle Payment</button>
+            <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:12px; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
+                &bull; Auto-posts balanced Debit <em>Expense Account</em> / Credit <em>Accounts Payable</em>.<br>
+                &bull; Auto-posts balanced Debit <em>Accounts Payable</em> / Credit <em>Bank Account</em>.<br>
+                &bull; Updates actual expenditure in Transatlantic Segment 4.
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Section -->
+    <div class="grid">
+        <!-- Budget Report -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 Subsea Cable Zone Budget Report</h2>
+                <span class="tag tag-completed">Transatlantic Segment 4</span>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Category</th><th>Budget ($)</th><th>Actual ($)</th><th>Variance ($)</th></tr>
+                </thead>
+                <tbody id="budgetReportTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Profit & Loss and Balance Sheet -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📑 Financial Reports (P&L & Balance Sheet)</h2>
+                <span class="tag tag-completed">Real-Time Ledger</span>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-box"><span>Revenue</span><strong id="pnlRev" style="color:var(--neon-green);">$0</strong></div>
+                <div class="stat-box"><span>Expenses</span><strong id="pnlExp" style="color:var(--danger);">$0</strong></div>
+                <div class="stat-box"><span>Net Income</span><strong id="pnlNet">$0</strong></div>
+            </div>
+            <h3 style="font-size:0.95rem; margin-bottom:8px; color:#38bdf8;">Balance Sheet Summary</h3>
+            <table style="margin-top:0;">
+                <tbody>
+                    <tr><td><strong>Assets:</strong> Bank Account</td><td id="bsBank">$0</td></tr>
+                    <tr><td><strong>Assets:</strong> Accounts Receivable</td><td id="bsAr">$0</td></tr>
+                    <tr><td><strong>Liabilities:</strong> Accounts Payable</td><td id="bsAp">$0</td></tr>
+                    <tr><td><strong>Equity:</strong> Retained Earnings (Net Income)</td><td id="bsEquity">$0</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Chart of Accounts & Masters -->
+        <div class="card">
+            <div class="card-header">
+                <h2>🏛️ Chart of Accounts & Masters</h2>
+                <span class="tag tag-completed">Master Data</span>
+            </div>
+            <table style="font-size:0.8rem;">
+                <thead><tr><th>Code</th><th>Account Name</th><th>Classification</th></tr></thead>
+                <tbody id="accountsTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- General Ledger Journals -->
+    <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+            <h2>📖 Balanced General Ledger Journals (Sales, Purchase, Bank, Cash)</h2>
+            <span class="tag tag-completed">Dual-Entry Bookkeeping</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Journal Type</th>
+                    <th>Account Name</th>
+                    <th>Debit ($)</th>
+                    <th>Credit ($)</th>
+                    <th>Reference</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="journalsTable"></tbody>
+        </table>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        let masters = { contacts: [], products: [], accounts: [] };
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => { t.style.display = 'none'; }, 3000);
+        }
+
+        async function loadAll() {
+            try {
+                // Fetch masters
+                const mRes = await fetch('/api/masters');
+                masters = await mRes.json();
+                renderMasters();
+
+                // Fetch operations
+                const opRes = await fetch('/api/operations');
+                const ops = await opRes.json();
+                renderOperations(ops);
+
+                // Fetch journals
+                const jRes = await fetch('/api/journals');
+                const journals = await jRes.json();
+                renderJournals(journals);
+
+                // Fetch reports
+                const rRes = await fetch('/api/reports');
+                const reports = await rRes.json();
+                renderReports(reports);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderMasters() {
+            // Contacts
+            const custSelect = document.getElementById('salesCustomer');
+            const vendSelect = document.getElementById('purchaseVendor');
+            custSelect.innerHTML = '';
+            vendSelect.innerHTML = '';
+            masters.contacts.forEach(c => {
+                const opt = `<option value="${c.name}">${c.name} (${c.role})</option>`;
+                if (c.role === 'Customer') custSelect.innerHTML += opt;
+                if (c.role === 'Vendor') vendSelect.innerHTML += opt;
+            });
+
+            // Products
+            const prodSelect = document.getElementById('salesProduct');
+            prodSelect.innerHTML = '';
+            masters.products.forEach(p => {
+                prodSelect.innerHTML += `<option value="${p.name}" data-price="${p.price}">${p.name} ($${p.price.toLocaleString()})</option>`;
+            });
+
+            // Accounts
+            const acctsTable = document.getElementById('accountsTable');
+            acctsTable.innerHTML = '';
+            masters.accounts.forEach(a => {
+                acctsTable.innerHTML += `<tr><td><code>${a.code}</code></td><td>${a.name}</td><td><span class="tag tag-completed">${a.type}</span></td></tr>`;
+            });
+        }
+
+        function updateSalesPrice() {
+            const select = document.getElementById('salesProduct');
+            const selectedOpt = select.options[select.selectedIndex];
+            if (selectedOpt && selectedOpt.dataset.price) {
+                document.getElementById('salesAmount').value = selectedOpt.dataset.price;
+            }
+        }
+
+        function renderOperations(ops) {
+            const tbody = document.getElementById('operationsList');
+            tbody.innerHTML = '';
+            ops.forEach(op => {
+                tbody.innerHTML += `<tr>
+                    <td><strong>${op.cable_id}</strong></td>
+                    <td>${op.fault_km} km</td>
+                    <td>${op.auv_name}</td>
+                    <td>${op.dive_hours} hrs</td>
+                    <td><button class="btn-danger" onclick="deleteOp(${op.id})">Delete</button></td>
+                </tr>`;
+            });
+        }
+
+        function renderJournals(journals) {
+            const tbody = document.getElementById('journalsTable');
+            tbody.innerHTML = '';
+            journals.forEach(j => {
+                tbody.innerHTML += `<tr>
+                    <td>${j.entry_date}</td>
+                    <td><span class="tag ${j.journal_type === 'Sales' ? 'tag-customer' : j.journal_type === 'Purchase' ? 'tag-vendor' : 'tag-completed'}">${j.journal_type}</span></td>
+                    <td>${j.account_name}</td>
+                    <td style="color:${j.debit > 0 ? 'var(--cyan)' : 'inherit'}">${j.debit > 0 ? '$' + j.debit.toLocaleString() : '-'}</td>
+                    <td style="color:${j.credit > 0 ? 'var(--neon-green)' : 'inherit'}">${j.credit > 0 ? '$' + j.credit.toLocaleString() : '-'}</td>
+                    <td><code>${j.ref_no}</code></td>
+                    <td><button class="btn-danger" onclick="deleteJournal(${j.id})">Delete</button></td>
+                </tr>`;
+            });
+        }
+
+        function renderReports(rep) {
+            // Budget
+            const bTable = document.getElementById('budgetReportTable');
+            bTable.innerHTML = '';
+            if (rep.budget) {
+                rep.budget.forEach(b => {
+                    const varianceColor = b.variance >= 0 ? 'var(--neon-green)' : 'var(--danger)';
+                    bTable.innerHTML += `<tr>
+                        <td><strong>${b.category}</strong></td>
+                        <td>$${b.budgeted.toLocaleString()}</td>
+                        <td>$${b.actual.toLocaleString()}</td>
+                        <td style="color:${varianceColor}; font-weight:600;">$${b.variance.toLocaleString()}</td>
+                    </tr>`;
+                });
+            }
+
+            // P&L
+            if (rep.pnl) {
+                document.getElementById('pnlRev').innerText = '$' + rep.pnl.revenue.toLocaleString();
+                document.getElementById('pnlExp').innerText = '$' + rep.pnl.expenses.toLocaleString();
+                const netEl = document.getElementById('pnlNet');
+                netEl.innerText = '$' + rep.pnl.netIncome.toLocaleString();
+                netEl.style.color = rep.pnl.netIncome >= 0 ? 'var(--neon-green)' : 'var(--danger)';
+            }
+
+            // Balance sheet
+            if (rep.balanceSheet) {
+                document.getElementById('bsBank').innerText = '$' + rep.balanceSheet.bank.toLocaleString();
+                document.getElementById('bsAr').innerText = '$' + rep.balanceSheet.ar.toLocaleString();
+                document.getElementById('bsAp').innerText = '$' + rep.balanceSheet.ap.toLocaleString();
+                document.getElementById('bsEquity').innerText = '$' + rep.balanceSheet.equity.toLocaleString();
+            }
+        }
+
+        async function dispatchAUV() {
+            const cableId = document.getElementById('cableId').value;
+            const faultKm = document.getElementById('faultKm').value;
+            const auvName = document.getElementById('auvName').value;
+            const diveHours = document.getElementById('diveHours').value;
+
+            const res = await fetch('/api/operations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cableId, faultKm, auvName, diveHours })
+            });
+            const data = await res.json();
+            showToast(data.status || 'Drone Dispatched!');
+            loadAll();
+        }
+
+        async function deleteOp(id) {
+            await fetch(`/api/operations/${id}`, { method: 'DELETE' });
+            showToast('Operation record deleted');
+            loadAll();
+        }
+
+        async function runSalesFlow() {
+            const customer = document.getElementById('salesCustomer').value;
+            const product = document.getElementById('salesProduct').value;
+            const amount = document.getElementById('salesAmount').value;
+            const actor = document.getElementById('actorSelect').value;
+
+            const res = await fetch('/api/sales-flow', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ customer, product, amount, actor })
+            });
+            const data = await res.json();
+            showToast(`Sales Flow Complete: ${data.flow} (${data.reference})`);
+            loadAll();
+        }
+
+        async function runPurchaseFlow() {
+            const vendor = document.getElementById('purchaseVendor').value;
+            const item = document.getElementById('purchaseItem').value;
+            const amount = document.getElementById('purchaseAmount').value;
+            const actor = document.getElementById('actorSelect').value;
+
+            const res = await fetch('/api/purchase-flow', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ vendor, item, amount, actor })
+            });
+            const data = await res.json();
+            showToast(`Purchase Flow Complete: ${data.flow} (${data.reference})`);
+            loadAll();
+        }
+
+        async function deleteJournal(id) {
+            await fetch(`/api/journals/${id}`, { method: 'DELETE' });
+            showToast('Journal Entry Removed');
+            loadAll();
+        }
+
+        window.onload = loadAll;
+    </script>
+</body>
+</html>
