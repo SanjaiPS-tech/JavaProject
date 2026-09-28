@@ -8,14 +8,14 @@
 </head>
 <body>
 
-    <header class="header">
-        <div class="header-title">
-            <h1>Automated Subsea Fiber Optic Cable Repair & Drone Trenching Network</h1>
+    <header>
+        <div>
+            <h1>Subsea Fiber Optic Cable Repair & Drone Trenching Network</h1>
             <p>AUV Fault Detection &bull; Automated Trenching &bull; Telecom Consortium Billing &bull; Transatlantic Segment 4</p>
         </div>
         <div class="actor-badge">
-            <span style="font-size:0.85rem; color:var(--text-secondary);">Active Actor:</span>
-            <select id="actorSelect" style="width:auto; padding:6px 12px; font-weight:600; background:#071224;">
+            <label for="actorSelect">Actor:</label>
+            <select id="actorSelect" style="width:auto;">
                 <option value="Admin">Admin (Full Control)</option>
                 <option value="Invoicing User">Invoicing User (Billing)</option>
                 <option value="System">System (Autonomous)</option>
@@ -27,10 +27,10 @@
         <!-- OTDR Fault Ingest & Drone Dispatch -->
         <div class="card">
             <div class="card-header">
-                <h2>📡 OTDR Fault Ingest & AUV Dispatch</h2>
+                <h2>OTDR Fault Ingest &amp; AUV Dispatch</h2>
                 <span class="tag tag-completed">Marine Operations</span>
             </div>
-            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;">
+            <p style="font-size:12px; color:#888; margin-bottom:12px;">
                 Ingest optical time-domain reflectometer fault points and dispatch autonomous trenching drones.
             </p>
             <div class="form-row">
@@ -56,8 +56,8 @@
                     <input type="number" id="diveHours" value="14.0" step="0.5">
                 </div>
             </div>
-            <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="dispatchAUV()">Dispatch Drone & Log Dive</button>
-            <table style="margin-top:16px;">
+            <button class="btn-primary" style="width:100%; margin-top:6px;" onclick="dispatchAUV()">Dispatch Drone &amp; Log Dive</button>
+            <table style="margin-top:14px;">
                 <thead><tr><th>Cable</th><th>Fault (km)</th><th>AUV</th><th>Hours</th><th>Action</th></tr></thead>
                 <tbody id="operationsList"></tbody>
             </table>
@@ -66,7 +66,7 @@
         <!-- Sales Flow -->
         <div class="card">
             <div class="card-header">
-                <h2>💼 Sales Flow (Billing Consortium)</h2>
+                <h2>Sales Flow (Billing Consortium)</h2>
                 <span class="tag tag-customer">Customer Workflow</span>
             </div>
             <div class="flow-stepper">
@@ -88,10 +88,10 @@
                     <input type="number" id="salesAmount" value="25000">
                 </div>
             </div>
-            <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="runSalesFlow()">Execute Settle Flow & Post Journals</button>
-            <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:12px; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
-                &bull; Auto-posts balanced Debit <em>Accounts Receivable</em> / Credit <em>Cable Repair Service Revenue</em>.<br>
-                &bull; Auto-posts balanced Debit <em>Bank Account</em> / Credit <em>Accounts Receivable</em>.<br>
+            <button class="btn-primary" style="width:100%; margin-top:6px;" onclick="runSalesFlow()">Execute Settle Flow &amp; Post Journals</button>
+            <div style="font-size:11px; color:#888; margin-top:10px; line-height:1.6;">
+                &bull; Auto-posts Debit <em>Accounts Receivable</em> / Credit <em>Cable Repair Service Revenue</em>.<br>
+                &bull; Auto-posts Debit <em>Bank Account</em> / Credit <em>Accounts Receivable</em>.<br>
                 &bull; Credits Transatlantic Segment 4 revenue budget.
             </div>
         </div>
@@ -99,7 +99,7 @@
         <!-- Purchase Flow -->
         <div class="card">
             <div class="card-header">
-                <h2>🛒 Purchase Flow (Marine Ops Expense)</h2>
+                <h2>Purchase Flow (Marine Ops Expense)</h2>
                 <span class="tag tag-vendor">Vendor Workflow</span>
             </div>
             <div class="flow-stepper">
@@ -124,10 +124,10 @@
                     <input type="number" id="purchaseAmount" value="12500">
                 </div>
             </div>
-            <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="runPurchaseFlow()">Process Vendor Bill & Settle Payment</button>
-            <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:12px; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
-                &bull; Auto-posts balanced Debit <em>Expense Account</em> / Credit <em>Accounts Payable</em>.<br>
-                &bull; Auto-posts balanced Debit <em>Accounts Payable</em> / Credit <em>Bank Account</em>.<br>
+            <button class="btn-primary" style="width:100%; margin-top:6px;" onclick="runPurchaseFlow()">Process Vendor Bill &amp; Settle Payment</button>
+            <div style="font-size:11px; color:#888; margin-top:10px; line-height:1.6;">
+                &bull; Auto-posts Debit <em>Expense Account</em> / Credit <em>Accounts Payable</em>.<br>
+                &bull; Auto-posts Debit <em>Accounts Payable</em> / Credit <em>Bank Account</em>.<br>
                 &bull; Updates actual expenditure in Transatlantic Segment 4.
             </div>
         </div>
@@ -138,7 +138,7 @@
         <!-- Budget Report -->
         <div class="card">
             <div class="card-header">
-                <h2>📊 Subsea Cable Zone Budget Report</h2>
+                <h2>Subsea Cable Zone Budget Report</h2>
                 <span class="tag tag-completed">Transatlantic Segment 4</span>
             </div>
             <table>
@@ -149,18 +149,18 @@
             </table>
         </div>
 
-        <!-- Profit & Loss and Balance Sheet -->
+        <!-- P&L and Balance Sheet -->
         <div class="card">
             <div class="card-header">
-                <h2>📑 Financial Reports (P&L & Balance Sheet)</h2>
+                <h2>Financial Reports (P&amp;L &amp; Balance Sheet)</h2>
                 <span class="tag tag-completed">Real-Time Ledger</span>
             </div>
             <div class="stat-grid">
-                <div class="stat-box"><span>Revenue</span><strong id="pnlRev" style="color:var(--neon-green);">$0</strong></div>
-                <div class="stat-box"><span>Expenses</span><strong id="pnlExp" style="color:var(--danger);">$0</strong></div>
+                <div class="stat-box"><span>Revenue</span><strong id="pnlRev">$0</strong></div>
+                <div class="stat-box"><span>Expenses</span><strong id="pnlExp">$0</strong></div>
                 <div class="stat-box"><span>Net Income</span><strong id="pnlNet">$0</strong></div>
             </div>
-            <h3 style="font-size:0.95rem; margin-bottom:8px; color:#38bdf8;">Balance Sheet Summary</h3>
+            <p style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.4px; color:#888; margin-bottom:8px;">Balance Sheet Summary</p>
             <table style="margin-top:0;">
                 <tbody>
                     <tr><td><strong>Assets:</strong> Bank Account</td><td id="bsBank">$0</td></tr>
@@ -174,10 +174,10 @@
         <!-- Chart of Accounts & Masters -->
         <div class="card">
             <div class="card-header">
-                <h2>🏛️ Chart of Accounts & Masters</h2>
+                <h2>Chart of Accounts &amp; Masters</h2>
                 <span class="tag tag-completed">Master Data</span>
             </div>
-            <table style="font-size:0.8rem;">
+            <table style="font-size:12px;">
                 <thead><tr><th>Code</th><th>Account Name</th><th>Classification</th></tr></thead>
                 <tbody id="accountsTable"></tbody>
             </table>
@@ -187,7 +187,7 @@
     <!-- General Ledger Journals -->
     <div class="card" style="margin-bottom:24px;">
         <div class="card-header">
-            <h2>📖 Balanced General Ledger Journals (Sales, Purchase, Bank, Cash)</h2>
+            <h2>Balanced General Ledger Journals</h2>
             <span class="tag tag-completed">Dual-Entry Bookkeeping</span>
         </div>
         <table>
@@ -220,22 +220,18 @@
 
         async function loadAll() {
             try {
-                // Fetch masters
                 const mRes = await fetch('/api/masters');
                 masters = await mRes.json();
                 renderMasters();
 
-                // Fetch operations
                 const opRes = await fetch('/api/operations');
                 const ops = await opRes.json();
                 renderOperations(ops);
 
-                // Fetch journals
                 const jRes = await fetch('/api/journals');
                 const journals = await jRes.json();
                 renderJournals(journals);
 
-                // Fetch reports
                 const rRes = await fetch('/api/reports');
                 const reports = await rRes.json();
                 renderReports(reports);
@@ -245,7 +241,6 @@
         }
 
         function renderMasters() {
-            // Contacts
             const custSelect = document.getElementById('salesCustomer');
             const vendSelect = document.getElementById('purchaseVendor');
             custSelect.innerHTML = '';
@@ -256,14 +251,12 @@
                 if (c.role === 'Vendor') vendSelect.innerHTML += opt;
             });
 
-            // Products
             const prodSelect = document.getElementById('salesProduct');
             prodSelect.innerHTML = '';
             masters.products.forEach(p => {
                 prodSelect.innerHTML += `<option value="${p.name}" data-price="${p.price}">${p.name} ($${p.price.toLocaleString()})</option>`;
             });
 
-            // Accounts
             const acctsTable = document.getElementById('accountsTable');
             acctsTable.innerHTML = '';
             masters.accounts.forEach(a => {
@@ -301,8 +294,8 @@
                     <td>${j.entry_date}</td>
                     <td><span class="tag ${j.journal_type === 'Sales' ? 'tag-customer' : j.journal_type === 'Purchase' ? 'tag-vendor' : 'tag-completed'}">${j.journal_type}</span></td>
                     <td>${j.account_name}</td>
-                    <td style="color:${j.debit > 0 ? 'var(--cyan)' : 'inherit'}">${j.debit > 0 ? '$' + j.debit.toLocaleString() : '-'}</td>
-                    <td style="color:${j.credit > 0 ? 'var(--neon-green)' : 'inherit'}">${j.credit > 0 ? '$' + j.credit.toLocaleString() : '-'}</td>
+                    <td>${j.debit > 0 ? '$' + j.debit.toLocaleString() : '-'}</td>
+                    <td>${j.credit > 0 ? '$' + j.credit.toLocaleString() : '-'}</td>
                     <td><code>${j.ref_no}</code></td>
                     <td><button class="btn-danger" onclick="deleteJournal(${j.id})">Delete</button></td>
                 </tr>`;
@@ -310,31 +303,27 @@
         }
 
         function renderReports(rep) {
-            // Budget
             const bTable = document.getElementById('budgetReportTable');
             bTable.innerHTML = '';
             if (rep.budget) {
                 rep.budget.forEach(b => {
-                    const varianceColor = b.variance >= 0 ? 'var(--neon-green)' : 'var(--danger)';
                     bTable.innerHTML += `<tr>
                         <td><strong>${b.category}</strong></td>
                         <td>$${b.budgeted.toLocaleString()}</td>
                         <td>$${b.actual.toLocaleString()}</td>
-                        <td style="color:${varianceColor}; font-weight:600;">$${b.variance.toLocaleString()}</td>
+                        <td style="color:${b.variance >= 0 ? '#1a7f4f' : '#c00'}; font-weight:600;">$${b.variance.toLocaleString()}</td>
                     </tr>`;
                 });
             }
 
-            // P&L
             if (rep.pnl) {
                 document.getElementById('pnlRev').innerText = '$' + rep.pnl.revenue.toLocaleString();
                 document.getElementById('pnlExp').innerText = '$' + rep.pnl.expenses.toLocaleString();
                 const netEl = document.getElementById('pnlNet');
                 netEl.innerText = '$' + rep.pnl.netIncome.toLocaleString();
-                netEl.style.color = rep.pnl.netIncome >= 0 ? 'var(--neon-green)' : 'var(--danger)';
+                netEl.style.color = rep.pnl.netIncome >= 0 ? '#1a7f4f' : '#c00';
             }
 
-            // Balance sheet
             if (rep.balanceSheet) {
                 document.getElementById('bsBank').innerText = '$' + rep.balanceSheet.bank.toLocaleString();
                 document.getElementById('bsAr').innerText = '$' + rep.balanceSheet.ar.toLocaleString();
